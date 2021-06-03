@@ -1,7 +1,7 @@
 using System.Security.AccessControl;
 namespace Api.Entities
 {
-    public class Kurser
+    public class Kurs
     {
         public int Id { get; set; }
         public int Kursnummer { get; set; }

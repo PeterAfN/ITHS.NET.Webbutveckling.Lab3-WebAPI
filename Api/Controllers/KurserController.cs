@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Api.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -9,6 +10,15 @@ namespace Api.Controllers
     [Route("api/kurser")]
     public class KurserController : ControllerBase
     {
+        private readonly DataContext _context;
+
+
+        //gör om till repository när det fungerar
+        public KurserController(DataContext context)
+        {
+            _context = context;
+        }
+
         [HttpGet()]
         public async Task<IActionResult> GetKurser()
         {

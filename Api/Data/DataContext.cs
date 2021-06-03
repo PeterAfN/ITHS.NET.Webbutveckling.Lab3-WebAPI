@@ -6,7 +6,7 @@ namespace Api.Data
 {
     public class DataContext : DbContext
     {
-        public DbSet<Kurser> Kurser { get; set; }
+        public DbSet<Kurs> Kurser { get; set; }
 
         public DbSet<Deltagare> Deltagare { get; set; }
 

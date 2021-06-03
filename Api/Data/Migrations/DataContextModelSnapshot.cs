@@ -53,7 +53,7 @@ namespace Api.data.Migrations
                     b.ToTable("Deltagare");
                 });
 
-            modelBuilder.Entity("Api.Entities.Kurser", b =>
+            modelBuilder.Entity("Api.Entities.Kurs", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

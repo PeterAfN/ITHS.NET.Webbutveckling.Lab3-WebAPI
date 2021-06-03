@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210603144146_InitialCreate")]
+    [Migration("20210603152658_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,7 +55,7 @@ namespace Api.data.Migrations
                     b.ToTable("Deltagare");
                 });
 
-            modelBuilder.Entity("Api.Entities.Kurser", b =>
+            modelBuilder.Entity("Api.Entities.Kurs", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
