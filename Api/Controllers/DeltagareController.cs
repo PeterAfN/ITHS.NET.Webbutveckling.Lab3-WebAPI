@@ -10,7 +10,7 @@ namespace Api.Controllers
     public class DeltagareController : ControllerBase
     {
         [HttpGet()]
-        public async Task<IActionResult> GetDeltagare()
+        public async Task<IActionResult> GetAllDeltagare()
         {
             var data = new { id = "1", förnamn = "Peter" };
             return Ok(data);
