@@ -28,5 +28,18 @@ namespace Api.Controllers
         {
             return StatusCode(201);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateKurs(Int16 id, object model)
+        {
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteKurs(Int16 id)
+        {
+
+            return NoContent();
+        }
     }
 }
