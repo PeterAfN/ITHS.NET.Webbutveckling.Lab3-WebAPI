@@ -13,18 +13,18 @@ namespace Api.Controllers
     [Route("api/kurser")]
     public class KurserController : ControllerBase
     {
-        private readonly IKursRepository _repo;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public KurserController(IKursRepository repo)
+        public KurserController(IUnitOfWork unitOfWork)
         {
-            _repo = repo;
+            _unitOfWork = unitOfWork;
         }
 
 
         [HttpGet()]
         public async Task<IActionResult> GetKurser()
         {
-            var result = await _repo.GetKurserAsync();
+            var result = await _unitOfWork.GetKursRepository().GetKurserAsync();
             return Ok(result);
         }
 
@@ -33,7 +33,7 @@ namespace Api.Controllers
         {
             try
             {
-                var kurs = await _repo.GetKursByIdAsync(id);
+                var kurs = await _unitOfWork.GetKursRepository().GetKursByIdAsync(id);
                 if (kurs == null) return NotFound();
                 return Ok(kurs);
             }
@@ -48,9 +48,9 @@ namespace Api.Controllers
         {
             try
             {
-                await _repo.AddAsync(kurs);
+                await _unitOfWork.GetKursRepository().AddAsync(kurs);
 
-                if (await _repo.SaveAllChangesAsync()) return StatusCode(201);
+                if (await _unitOfWork.GetKursRepository().SaveAllChangesAsync()) return StatusCode(201);
 
                 return StatusCode(500);
             }
@@ -63,7 +63,7 @@ namespace Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateKurs(int id, Kurs kursModel)
         {
-            var kurs = await _repo.GetKursByIdAsync(id);
+            var kurs = await _unitOfWork.GetKursRepository().GetKursByIdAsync(id);
 
             kurs.Kursnummer = kursModel.Kursnummer;
             kurs.Kurstitel = kursModel.Kurstitel;
@@ -72,8 +72,8 @@ namespace Api.Controllers
             kurs.Nivå = kursModel.Nivå;
             kurs.Status = kursModel.Status;
 
-            _repo.Update(kurs);
-            var result = await _repo.SaveAllChangesAsync();
+            _unitOfWork.GetKursRepository().Update(kurs);
+            var result = await _unitOfWork.GetKursRepository().SaveAllChangesAsync();
 
             return NoContent();
         }
@@ -83,12 +83,12 @@ namespace Api.Controllers
         {
             try
             {
-                var kurs = await _repo.GetKursByIdAsync(id);
+                var kurs = await _unitOfWork.GetKursRepository().GetKursByIdAsync(id);
 
                 if (kurs == null) return NotFound();
 
-                _repo.Delete(kurs);
-                var result = _repo.SaveAllChangesAsync();
+                _unitOfWork.GetKursRepository().Delete(kurs);
+                var result = _unitOfWork.GetKursRepository().SaveAllChangesAsync();
 
                 return NoContent();
             }
