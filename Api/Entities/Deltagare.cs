@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Api.Entities
 {
     public class Deltagare
@@ -12,5 +14,7 @@ namespace Api.Entities
         public string StateProvince { get; set; }
         public int PostalCode { get; set; }
         public string Country { get; set; }
+
+
     }
 }

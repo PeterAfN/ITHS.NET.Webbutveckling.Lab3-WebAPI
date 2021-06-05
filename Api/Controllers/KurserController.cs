@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Api.Data;
 using Api.Entities;
+using Api.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,19 +13,18 @@ namespace Api.Controllers
     [Route("api/kurser")]
     public class KurserController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IKursRepository _repo;
 
-        //gör om till repository när det fungerar
-        public KurserController(DataContext context)
+        public KurserController(IKursRepository repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
 
         [HttpGet()]
         public async Task<IActionResult> GetKurser()
         {
-            var result = await _context.Kurser.ToListAsync();
+            var result = await _repo.GetKurserAsync();
             return Ok(result);
         }
 
@@ -33,7 +33,8 @@ namespace Api.Controllers
         {
             try
             {
-                var kurs = await _context.Kurser.SingleOrDefaultAsync(k => k.Id == id);
+                var kurs = await _repo.GetKursByIdAsync(id);
+                if (kurs == null) return NotFound();
                 return Ok(kurs);
             }
             catch (Exception ex)
@@ -47,9 +48,11 @@ namespace Api.Controllers
         {
             try
             {
-                _context.Kurser.Add(kurs);
-                var result = await _context.SaveChangesAsync();
-                return StatusCode(201);
+                await _repo.AddAsync(kurs);
+
+                if (await _repo.SaveAllChangesAsync()) return StatusCode(201);
+
+                return StatusCode(500);
             }
             catch (Exception ex)
             {
@@ -60,7 +63,7 @@ namespace Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateKurs(int id, Kurs kursModel)
         {
-            var kurs = await _context.Kurser.FindAsync(id);
+            var kurs = await _repo.GetKursByIdAsync(id);
 
             kurs.Kursnummer = kursModel.Kursnummer;
             kurs.Kurstitel = kursModel.Kurstitel;
@@ -69,8 +72,8 @@ namespace Api.Controllers
             kurs.Nivå = kursModel.Nivå;
             kurs.Status = kursModel.Status;
 
-            _context.Update(kurs);
-            var result = await _context.SaveChangesAsync();
+            _repo.Update(kurs);
+            var result = await _repo.SaveAllChangesAsync();
 
             return NoContent();
         }
@@ -80,11 +83,12 @@ namespace Api.Controllers
         {
             try
             {
-                var kurs = await _context.Kurser.SingleOrDefaultAsync(k => k.Id == id);
+                var kurs = await _repo.GetKursByIdAsync(id);
+
                 if (kurs == null) return NotFound();
 
-                _context.Kurser.Remove(kurs);
-                var result = _context.SaveChangesAsync();
+                _repo.Delete(kurs);
+                var result = _repo.SaveAllChangesAsync();
 
                 return NoContent();
             }
@@ -92,8 +96,6 @@ namespace Api.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
-
-
         }
     }
 }

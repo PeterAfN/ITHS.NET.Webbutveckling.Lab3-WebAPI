@@ -1,4 +1,6 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.AccessControl;
+
 namespace Api.Entities
 {
     public class Kurs
@@ -10,5 +12,7 @@ namespace Api.Entities
         public int Kurslängd { get; set; }
         public string Nivå { get; set; }
         public string Status { get; set; }
+
+
     }
 }

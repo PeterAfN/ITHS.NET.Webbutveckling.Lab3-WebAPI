@@ -1,7 +1,9 @@
+using System.Reflection.Metadata.Ecma335;
 using System;
 using System.Threading.Tasks;
 using Api.Data;
 using Api.Entities;
+using Api.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,18 +13,18 @@ namespace Api.Controllers
     [Route("api/deltagare")]
     public class DeltagareController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IDeltagareRepository _repo;
 
-        public DeltagareController(DataContext context)
+        public DeltagareController(IDeltagareRepository repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
 
         [HttpGet()]
         public async Task<IActionResult> GetAllDeltagare()
         {
-            var result = await _context.Deltagare.ToListAsync();
+            var result = await _repo.GetDeltagareAsync();
             return Ok(result);
         }
 
@@ -31,7 +33,9 @@ namespace Api.Controllers
         {
             try
             {
-                var deltagare = await _context.Deltagare.SingleOrDefaultAsync(d => d.Id == id);
+                var deltagare = await _repo.GetDeltagareByIdAsync(id);
+
+                if (deltagare == null) return NotFound();
                 return Ok(deltagare);
             }
             catch (Exception ex)
@@ -45,9 +49,11 @@ namespace Api.Controllers
         {
             try
             {
-                _context.Deltagare.Add(deltagare);
-                var result = await _context.SaveChangesAsync();
-                return StatusCode(201);
+                await _repo.AddAsync(deltagare);
+
+                if (await _repo.SaveAllChangesAsync()) return StatusCode(201);
+
+                return StatusCode(500);
             }
             catch (Exception ex)
             {
@@ -58,7 +64,7 @@ namespace Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDeltagare(int id, Deltagare deltagareModel)
         {
-            var deltagare = await _context.Deltagare.FindAsync(id);
+            var deltagare = await _repo.GetDeltagareByIdAsync(id);
 
             deltagare.Förnamn = deltagareModel.Förnamn;
             deltagare.Efternamn = deltagareModel.Efternamn;
@@ -69,8 +75,9 @@ namespace Api.Controllers
             deltagare.StateProvince = deltagareModel.StateProvince;
             deltagare.PostalCode = deltagareModel.PostalCode;
             deltagare.Country = deltagareModel.Country;
-            _context.Update(deltagare);
-            var result = await _context.SaveChangesAsync();
+
+            _repo.Update(deltagare);
+            var result = await _repo.SaveAllChangesAsync();
 
             return NoContent();
         }
@@ -80,11 +87,12 @@ namespace Api.Controllers
         {
             try
             {
-                var deltagare = await _context.Deltagare.SingleOrDefaultAsync(d => d.Id == id);
+                var deltagare = await _repo.GetDeltagareByIdAsync(id);
+
                 if (deltagare == null) return NotFound();
 
-                _context.Deltagare.Remove(deltagare);
-                var result = _context.SaveChangesAsync();
+                _repo.Delete(deltagare);
+                var result = _repo.SaveAllChangesAsync();
 
                 return NoContent();
             }
