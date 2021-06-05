@@ -10,9 +10,22 @@ namespace Api.Data
 
         public DbSet<Deltagare> Deltagare { get; set; }
 
-        public DataContext(DbContextOptions options) : base(options)
-        {
-        }
+        public DbSet<KursDeltagare> KursDeltagare { get; set; }
 
+        public DataContext(DbContextOptions options) : base(options) { }
+
+        // protected override void OnModelCreating(ModelBuilder modelBuilder)
+        // {
+        //     base.OnModelCreating(modelBuilder);
+        // }
+
+
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<KursDeltagare>()
+                .HasKey(kd => new { kd.KursId, kd.DeltagareId });
+        }
     }
 }

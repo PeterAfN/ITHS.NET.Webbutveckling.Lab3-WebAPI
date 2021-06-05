@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.AccessControl;
 
@@ -14,5 +15,10 @@ namespace Api.Entities
         public string Status { get; set; }
 
 
+        // //Foreign key constraint
+        // [ForeignKey("MakeId")]
+        // public virtual Manufacturer Make { get; set; }
+
+        public List<KursDeltagare> KursDeltagare { get; set; }
     }
 }

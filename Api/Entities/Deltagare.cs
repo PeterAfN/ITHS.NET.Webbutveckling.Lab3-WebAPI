@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Api.Entities
@@ -15,6 +16,8 @@ namespace Api.Entities
         public int PostalCode { get; set; }
         public string Country { get; set; }
 
+        // public virtual ICollection<Vehicle> Vehicles { get; set; }
 
+        public List<KursDeltagare> KursDeltagare { get; set; }
     }
 }
