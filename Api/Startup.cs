@@ -31,9 +31,11 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
 
+
             services.AddScoped<IKursRepository, KursRepository>();
             services.AddScoped<IDeltagareRepository, DeltagareRepository>();
             services.AddDbContext<DataContext>(options => options.UseSqlite(_config.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
