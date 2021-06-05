@@ -92,6 +92,7 @@ namespace Api.Controllers
                 if (deltagare == null) return NotFound();
 
                 _repo.Delete(deltagare);
+
                 var result = _repo.SaveAllChangesAsync();
 
                 return NoContent();
