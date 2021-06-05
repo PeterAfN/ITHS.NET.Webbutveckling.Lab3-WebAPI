@@ -13,18 +13,18 @@ namespace Api.Controllers
     [Route("api/deltagare")]
     public class DeltagareController : ControllerBase
     {
-        private readonly IDeltagareRepository _repo;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeltagareController(IDeltagareRepository repo)
+        public DeltagareController(IUnitOfWork unitOfWork)
         {
-            _repo = repo;
+            _unitOfWork = unitOfWork;
         }
 
 
         [HttpGet()]
         public async Task<IActionResult> GetAllDeltagare()
         {
-            var result = await _repo.GetDeltagareAsync();
+            var result = await _unitOfWork.GetDeltagareRepository().GetDeltagareAsync();
             return Ok(result);
         }
 
@@ -33,7 +33,7 @@ namespace Api.Controllers
         {
             try
             {
-                var deltagare = await _repo.GetDeltagareByIdAsync(id);
+                var deltagare = await _unitOfWork.GetDeltagareRepository().GetDeltagareByIdAsync(id);
 
                 if (deltagare == null) return NotFound();
                 return Ok(deltagare);
@@ -49,9 +49,9 @@ namespace Api.Controllers
         {
             try
             {
-                await _repo.AddAsync(deltagare);
+                await _unitOfWork.GetDeltagareRepository().AddAsync(deltagare);
 
-                if (await _repo.SaveAllChangesAsync()) return StatusCode(201);
+                if (await _unitOfWork.GetDeltagareRepository().SaveAllChangesAsync()) return StatusCode(201);
 
                 return StatusCode(500);
             }
@@ -64,7 +64,7 @@ namespace Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDeltagare(int id, Deltagare deltagareModel)
         {
-            var deltagare = await _repo.GetDeltagareByIdAsync(id);
+            var deltagare = await _unitOfWork.GetDeltagareRepository().GetDeltagareByIdAsync(id);
 
             deltagare.Förnamn = deltagareModel.Förnamn;
             deltagare.Efternamn = deltagareModel.Efternamn;
@@ -76,8 +76,8 @@ namespace Api.Controllers
             deltagare.PostalCode = deltagareModel.PostalCode;
             deltagare.Country = deltagareModel.Country;
 
-            _repo.Update(deltagare);
-            var result = await _repo.SaveAllChangesAsync();
+            _unitOfWork.GetDeltagareRepository().Update(deltagare);
+            var result = await _unitOfWork.GetDeltagareRepository().SaveAllChangesAsync();
 
             return NoContent();
         }
@@ -87,13 +87,13 @@ namespace Api.Controllers
         {
             try
             {
-                var deltagare = await _repo.GetDeltagareByIdAsync(id);
+                var deltagare = await _unitOfWork.GetDeltagareRepository().GetDeltagareByIdAsync(id);
 
                 if (deltagare == null) return NotFound();
 
-                _repo.Delete(deltagare);
+                _unitOfWork.GetDeltagareRepository().Delete(deltagare);
 
-                var result = _repo.SaveAllChangesAsync();
+                var result = _unitOfWork.GetDeltagareRepository().SaveAllChangesAsync();
 
                 return NoContent();
             }
