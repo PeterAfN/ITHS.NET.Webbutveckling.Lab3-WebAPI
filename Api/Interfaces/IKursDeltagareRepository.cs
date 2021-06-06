@@ -9,7 +9,7 @@ namespace Api.Interfaces
         Task AddAsync(KursDeltagare kursDeltagare);
         Task<IEnumerable<KursDeltagare>> GetKursDeltagareAsync();
 
-        Task<KursDeltagare> GetKursDeltagareByIdAsync(int id);
+        Task<KursDeltagare> GetKursDeltagareByIdAsync(int kursId, int deltagareId);
 
         void Update(KursDeltagare kursDeltagare);
 

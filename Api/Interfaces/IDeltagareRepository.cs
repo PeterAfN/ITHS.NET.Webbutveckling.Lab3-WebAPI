@@ -11,6 +11,8 @@ namespace Api.Interfaces
 
         Task<Deltagare> GetDeltagareByIdAsync(int id);
 
+        Task<Deltagare> GetDeltagareByEmailAsync(string email);
+
         void Update(Deltagare deltagare);
 
         void Delete(Deltagare deltagare);

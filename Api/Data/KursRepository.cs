@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Entities;
 using Api.Interfaces;
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data
 {
@@ -28,6 +28,15 @@ namespace Api.Data
         public async Task<Kurs> GetKursByIdAsync(int id)
         {
             return await _context.Kurser.FindAsync(id);
+        }
+
+        public async Task<Kurs> GetKursByKursnummerAsync(string kursnummer)
+        {
+            // return await _context.Kurser.FindAsync(kursnummer);
+
+            var kurs = await _context.Kurser./*Include(d => d.Epost).*/FirstOrDefaultAsync(k => k.Kursnummer.Equals(int.Parse(kursnummer)));
+
+            return kurs;
         }
 
         public async Task<IEnumerable<Kurs>> GetKurserAsync()

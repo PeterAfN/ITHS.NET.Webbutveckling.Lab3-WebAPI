@@ -35,6 +35,14 @@ namespace Api.Data
             return await _context.Deltagare.FindAsync(id);
         }
 
+        public async Task<Deltagare> GetDeltagareByEmailAsync(string email)
+        {
+            var deltagare = await _context.Deltagare./*Include(d => d.Epost).*/FirstOrDefaultAsync(
+                c => c.Epost.ToUpper() == email.ToUpper());
+
+            return deltagare;
+        }
+
         public async Task<bool> SaveAllChangesAsync()
         {
             return await _context.SaveChangesAsync() > 0;

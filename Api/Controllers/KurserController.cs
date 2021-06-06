@@ -43,6 +43,21 @@ namespace Api.Controllers
             }
         }
 
+        [HttpGet("find/{kursnummer}")]
+        public async Task<IActionResult> GetKurs(string kursnummer)
+        {
+            try
+            {
+                var kurs = await _unitOfWork.GetKursRepository().GetKursByKursnummerAsync(kursnummer);
+                if (kurs == null) return NotFound();
+                return Ok(kurs);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }        
+
         [HttpPost()]
         public async Task<IActionResult> AddKurs(Kurs kurs)
         {

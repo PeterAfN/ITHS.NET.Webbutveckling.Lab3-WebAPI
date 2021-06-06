@@ -30,9 +30,9 @@ namespace Api.Data
             return await _context.KursDeltagare.ToListAsync();
         }
 
-        public async Task<KursDeltagare> GetKursDeltagareByIdAsync(int id)
+        public async Task<KursDeltagare> GetKursDeltagareByIdAsync(int kursId, int deltagareId)
         {
-            return await _context.KursDeltagare.FindAsync(id);
+            return await _context.KursDeltagare.FirstOrDefaultAsync(kd => kd.KursId == kursId && kd.DeltagareId == deltagareId);
         }
 
         public async Task<bool> SaveAllChangesAsync()

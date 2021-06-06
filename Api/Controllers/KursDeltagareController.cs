@@ -28,22 +28,6 @@ namespace Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetKursDeltagare(int id)
-        {
-            try
-            {
-                var kursDeltagare = await _unitOfWork.GetKursDeltagareRepository().GetKursDeltagareByIdAsync(id);
-
-                if (kursDeltagare == null) return NotFound();
-                return Ok(kursDeltagare);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
-
         [HttpPost()]
         public async Task<IActionResult> AddKursDeltagare(KursDeltagare kursDeltagare)
         {
@@ -61,35 +45,46 @@ namespace Api.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateKursDeltagare(int id, KursDeltagare kursDeltagareModel)
-        {
-            var kursDeltagare = await _unitOfWork.GetKursDeltagareRepository().GetKursDeltagareByIdAsync(id);
+        // [HttpGet("{id}")]
+        // public async Task<IActionResult> GetKursDeltagare(int id)
+        // {
+        //     try
+        //     {
+        //         var kursDeltagare = await _unitOfWork.GetKursDeltagareRepository().GetKursDeltagareByIdAsync(id);
 
-            kursDeltagare.Deltagare = kursDeltagareModel.Deltagare;
-            kursDeltagare.DeltagareId = kursDeltagareModel.DeltagareId;
-            kursDeltagare.Kurs = kursDeltagareModel.Kurs;
-            kursDeltagare.KursId = kursDeltagareModel.KursId;
+        //         if (kursDeltagare == null) return NotFound();
+        //         return Ok(kursDeltagare);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return StatusCode(500, ex.Message);
+        //     }
+        // }
 
-            _unitOfWork.GetKursDeltagareRepository().Update(kursDeltagare);
-            var result = await _unitOfWork.GetKursDeltagareRepository().SaveAllChangesAsync();
 
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteKursDeltagare(int id)
+        [HttpGet("{KursId},{DeltagareId}")]
+        public async Task<IActionResult> GetKursDeltagare(int KursId, int DeltagareId)
         {
             try
             {
-                var kursDeltagare = await _unitOfWork.GetKursDeltagareRepository().GetKursDeltagareByIdAsync(id);
+                var kursD = await _unitOfWork.GetKursDeltagareRepository().GetKursDeltagareByIdAsync(KursId, DeltagareId);
 
-                if (kursDeltagare == null) return NotFound();
+                if (kursD == null) return NotFound();
+                return Ok(kursD);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
+        [HttpDelete()]
+        public IActionResult DeleteKursDeltagare(KursDeltagare kursDeltagare)
+        {
+            try
+            {
                 _unitOfWork.GetKursDeltagareRepository().Delete(kursDeltagare);
-
                 var result = _unitOfWork.GetKursDeltagareRepository().SaveAllChangesAsync();
-
                 return NoContent();
             }
             catch (Exception ex)

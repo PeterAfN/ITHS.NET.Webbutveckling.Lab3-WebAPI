@@ -44,6 +44,23 @@ namespace Api.Controllers
             }
         }
 
+        [HttpGet("find/{email}")]
+        public async Task<IActionResult> GetDeltagare(string email)
+        {
+            try
+            {
+                var deltagare = await _unitOfWork.GetDeltagareRepository().GetDeltagareByEmailAsync(email);
+
+                if (deltagare == null) return NotFound();
+                return Ok(deltagare);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
         [HttpPost()]
         public async Task<IActionResult> AddDeltagare(Deltagare deltagare)
         {

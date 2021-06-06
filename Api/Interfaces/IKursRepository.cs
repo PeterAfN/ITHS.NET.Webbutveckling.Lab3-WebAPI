@@ -11,6 +11,8 @@ namespace Api.Interfaces
 
         Task<Kurs> GetKursByIdAsync(int id);
 
+        Task<Kurs> GetKursByKursnummerAsync(string kursnummer);
+
         void Update(Kurs kurs);
 
         void Delete(Kurs kurs);
