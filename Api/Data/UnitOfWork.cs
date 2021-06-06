@@ -21,6 +21,11 @@ namespace Api.Data
             return new KursRepository(_context);
         }
 
+        public IKursDeltagareRepository GetKursDeltagareRepository()
+        {
+            return new KursDeltagareRepository(_context);
+        }
+
         public async Task<bool> Complete()
         {
             return await _context.SaveChangesAsync() > 0;

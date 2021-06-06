@@ -7,6 +7,8 @@ namespace Api.Interfaces
 
         IDeltagareRepository GetDeltagareRepository();
 
+        IKursDeltagareRepository GetKursDeltagareRepository();
+
         Task<bool> Complete();
 
         bool HasChanges();
