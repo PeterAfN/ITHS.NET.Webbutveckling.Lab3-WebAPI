@@ -30,11 +30,28 @@ namespace Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
             services.AddScoped<IKursRepository, KursRepository>();
             services.AddScoped<IDeltagareRepository, DeltagareRepository>();
             services.AddScoped<IKursDeltagareRepository, KursDeltagareRepository>();
             services.AddDbContext<DataContext>(options => options.UseSqlite(_config.GetConnectionString("DefaultConnection")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            //--------------------------------
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://127.0.0.1:5501",
+                                            "http://www.example.com")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials();
+                    });
+            });
+            //--------------------------------
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -56,6 +73,10 @@ namespace Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            //--------------------------------
+            app.UseCors();
+            //--------------------------------
 
             app.UseAuthorization();
 
