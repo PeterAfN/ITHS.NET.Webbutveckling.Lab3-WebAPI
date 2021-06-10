@@ -12,7 +12,7 @@ namespace Api.Entities
         public int Length { get; set; }
         public string Difficulty { get; set; }
         public string Status { get; set; }
-
+        public decimal Price { get; set; }
         public List<CourseStudent> CourseStudent { get; set; }
     }
 }

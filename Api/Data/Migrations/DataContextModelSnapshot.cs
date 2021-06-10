@@ -30,6 +30,9 @@ namespace Api.Data.Migrations
                     b.Property<int>("Length")
                         .HasColumnType("INTEGER");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Status")
                         .HasColumnType("TEXT");
 

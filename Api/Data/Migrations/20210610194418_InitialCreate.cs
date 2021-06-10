@@ -16,7 +16,8 @@ namespace Api.Data.Migrations
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     Length = table.Column<int>(type: "INTEGER", nullable: false),
                     Difficulty = table.Column<string>(type: "TEXT", nullable: true),
-                    Status = table.Column<string>(type: "TEXT", nullable: true)
+                    Status = table.Column<string>(type: "TEXT", nullable: true),
+                    Price = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
