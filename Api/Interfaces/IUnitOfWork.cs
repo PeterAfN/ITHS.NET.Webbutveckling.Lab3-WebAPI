@@ -3,14 +3,10 @@ namespace Api.Interfaces
 {
     public interface IUnitOfWork
     {
-        IKursRepository GetKursRepository();
-
-        IDeltagareRepository GetDeltagareRepository();
-
-        IKursDeltagareRepository GetKursDeltagareRepository();
-
+        ICourseRepository GetCourseRepository();
+        IStudentRepository GetStudentRepository();
+        ICourseStudentRepository GetCourseStudentRepository();
         Task<bool> Complete();
-
         bool HasChanges();
     }
 }

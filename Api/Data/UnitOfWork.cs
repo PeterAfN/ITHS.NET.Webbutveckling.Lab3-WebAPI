@@ -11,19 +11,19 @@ namespace Api.Data
             _context = context;
         }
 
-        public IDeltagareRepository GetDeltagareRepository()
+        public IStudentRepository GetStudentRepository()
         {
-            return new DeltagareRepository(_context);
+            return new StudentRepository(_context);
         }
 
-        public IKursRepository GetKursRepository()
+        public ICourseRepository GetCourseRepository()
         {
-            return new KursRepository(_context);
+            return new CourseRepository(_context);
         }
 
-        public IKursDeltagareRepository GetKursDeltagareRepository()
+        public ICourseStudentRepository GetCourseStudentRepository()
         {
-            return new KursDeltagareRepository(_context);
+            return new CourseStudentRepository(_context);
         }
 
         public async Task<bool> Complete()
