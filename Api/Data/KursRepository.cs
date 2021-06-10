@@ -34,7 +34,7 @@ namespace Api.Data
         {
             // return await _context.Kurser.FindAsync(kursnummer);
 
-            var kurs = await _context.Kurser./*Include(d => d.Epost).*/FirstOrDefaultAsync(k => k.Kursnummer.Equals(int.Parse(kursnummer)));
+            var kurs = await _context.Kurser./*Include(d => d.Epost).*/FirstOrDefaultAsync(k => k.KursnummerId.Equals(int.Parse(kursnummer)));
 
             return kurs;
         }

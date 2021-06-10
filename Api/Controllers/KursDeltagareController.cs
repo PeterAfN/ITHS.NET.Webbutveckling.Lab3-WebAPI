@@ -62,12 +62,12 @@ namespace Api.Controllers
         // }
 
 
-        [HttpGet("{KursId},{DeltagareId}")]
-        public async Task<IActionResult> GetKursDeltagare(int KursId, int DeltagareId)
+        [HttpGet("{kursnummer},{deltagareId}")]
+        public async Task<IActionResult> GetKursDeltagare(int kursnummer, int deltagareId)
         {
             try
             {
-                var kursD = await _unitOfWork.GetKursDeltagareRepository().GetKursDeltagareByIdAsync(KursId, DeltagareId);
+                var kursD = await _unitOfWork.GetKursDeltagareRepository().GetKursDeltagareByIdAsync(kursnummer, deltagareId);
 
                 if (kursD == null) return NotFound();
                 return Ok(kursD);

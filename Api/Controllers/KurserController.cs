@@ -28,12 +28,12 @@ namespace Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetKurs(int id)
+        [HttpGet("{kursnummer}")]
+        public async Task<IActionResult> GetKurs(int kursnummer)
         {
             try
             {
-                var kurs = await _unitOfWork.GetKursRepository().GetKursByIdAsync(id);
+                var kurs = await _unitOfWork.GetKursRepository().GetKursByIdAsync(kursnummer);
                 if (kurs == null) return NotFound();
                 return Ok(kurs);
             }
@@ -43,20 +43,20 @@ namespace Api.Controllers
             }
         }
 
-        [HttpGet("find/{kursnummer}")]
-        public async Task<IActionResult> GetKurs(string kursnummer)
-        {
-            try
-            {
-                var kurs = await _unitOfWork.GetKursRepository().GetKursByKursnummerAsync(kursnummer);
-                if (kurs == null) return NotFound();
-                return Ok(kurs);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }        
+        // [HttpGet("find/{kursnummer}")]
+        // public async Task<IActionResult> GetKurs(string kursnummer)
+        // {
+        //     try
+        //     {
+        //         var kurs = await _unitOfWork.GetKursRepository().GetKursByKursnummerAsync(kursnummer);
+        //         if (kurs == null) return NotFound();
+        //         return Ok(kurs);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return StatusCode(500, ex.Message);
+        //     }
+        // }        
 
         [HttpPost()]
         public async Task<IActionResult> AddKurs(Kurs kurs)
@@ -75,12 +75,12 @@ namespace Api.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateKurs(int id, Kurs kursModel)
+        [HttpPut("{kursnummer}")]
+        public async Task<IActionResult> UpdateKurs(int kursnummer, Kurs kursModel)
         {
-            var kurs = await _unitOfWork.GetKursRepository().GetKursByIdAsync(id);
+            var kurs = await _unitOfWork.GetKursRepository().GetKursByIdAsync(kursnummer);
 
-            kurs.Kursnummer = kursModel.Kursnummer;
+            kurs.KursnummerId = kursModel.KursnummerId;
             kurs.Kurstitel = kursModel.Kurstitel;
             kurs.Kursbeskrivning = kursModel.Kursbeskrivning;
             kurs.Kurslängd = kursModel.Kurslängd;
@@ -93,12 +93,12 @@ namespace Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteKurs(int id)
+        [HttpDelete("{kursnummer}")]
+        public async Task<IActionResult> DeleteKurs(int kursnummer)
         {
             try
             {
-                var kurs = await _unitOfWork.GetKursRepository().GetKursByIdAsync(id);
+                var kurs = await _unitOfWork.GetKursRepository().GetKursByIdAsync(kursnummer);
 
                 if (kurs == null) return NotFound();
 

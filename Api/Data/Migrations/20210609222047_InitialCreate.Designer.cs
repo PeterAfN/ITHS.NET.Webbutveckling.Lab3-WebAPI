@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Api.data.Migrations
+namespace Api.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210603152658_InitialCreate")]
+    [Migration("20210609222047_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,7 +57,7 @@ namespace Api.data.Migrations
 
             modelBuilder.Entity("Api.Entities.Kurs", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("KursnummerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -65,9 +65,6 @@ namespace Api.data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Kurslängd")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Kursnummer")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Kurstitel")
@@ -79,9 +76,53 @@ namespace Api.data.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("KursnummerId");
 
                     b.ToTable("Kurser");
+                });
+
+            modelBuilder.Entity("Api.Entities.KursDeltagare", b =>
+                {
+                    b.Property<int>("KursId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DeltagareId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("KursId", "DeltagareId");
+
+                    b.HasIndex("DeltagareId");
+
+                    b.ToTable("KursDeltagare");
+                });
+
+            modelBuilder.Entity("Api.Entities.KursDeltagare", b =>
+                {
+                    b.HasOne("Api.Entities.Deltagare", "Deltagare")
+                        .WithMany("KursDeltagare")
+                        .HasForeignKey("DeltagareId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Api.Entities.Kurs", "Kurs")
+                        .WithMany("KursDeltagare")
+                        .HasForeignKey("KursId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Deltagare");
+
+                    b.Navigation("Kurs");
+                });
+
+            modelBuilder.Entity("Api.Entities.Deltagare", b =>
+                {
+                    b.Navigation("KursDeltagare");
+                });
+
+            modelBuilder.Entity("Api.Entities.Kurs", b =>
+                {
+                    b.Navigation("KursDeltagare");
                 });
 #pragma warning restore 612, 618
         }

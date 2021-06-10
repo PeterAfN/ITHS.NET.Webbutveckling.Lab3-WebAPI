@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Api.data.Migrations
+namespace Api.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
     partial class DataContextModelSnapshot : ModelSnapshot
@@ -55,7 +55,7 @@ namespace Api.data.Migrations
 
             modelBuilder.Entity("Api.Entities.Kurs", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("KursnummerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -63,9 +63,6 @@ namespace Api.data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Kurslängd")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Kursnummer")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Kurstitel")
@@ -77,7 +74,7 @@ namespace Api.data.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("KursnummerId");
 
                     b.ToTable("Kurser");
                 });
