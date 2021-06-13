@@ -65,7 +65,7 @@ namespace Api.Controllers
             {
                 await _unitOfWork.GetStudentRepository().AddAsync(student);
 
-                if (await _unitOfWork.GetStudentRepository().SaveAllChangesAsync()) return StatusCode(201);
+                if (await _unitOfWork.GetStudentRepository().SaveAllChangesAsync()) return StatusCode(201, student.Id.ToString());
 
                 return StatusCode(500);
             }

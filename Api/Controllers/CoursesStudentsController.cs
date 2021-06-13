@@ -1,8 +1,11 @@
+using System.ComponentModel;
 using System;
 using System.Threading.Tasks;
 using Api.Entities;
 using Api.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Api.Controllers
 {
@@ -22,6 +25,7 @@ namespace Api.Controllers
         public async Task<IActionResult> GetAllCoursesStudents()
         {
             var result = await _unitOfWork.GetCourseStudentRepository().GetCoursesStudentsAsync();
+
             return Ok(result);
         }
 
@@ -34,7 +38,7 @@ namespace Api.Controllers
 
                 if (await _unitOfWork.GetCourseStudentRepository().SaveAllChangesAsync()) return StatusCode(201);
 
-                return StatusCode(500);
+                return StatusCode(400); //duplicate -> "bad request"
             }
             catch (Exception ex)
             {
@@ -42,15 +46,18 @@ namespace Api.Controllers
             }
         }
 
-        [HttpGet("{courseId},{studentdId}")]
-        public async Task<IActionResult> GetCourseStudent(int courseId, int studentdId)
+        [HttpGet("{studentEmail}")]
+        public async Task<IActionResult> GetAllCoursesStudents(string studentEmail)
         {
             try
             {
-                var courseStudent = await _unitOfWork.GetCourseStudentRepository().GetCourseStudentByIdAsync(courseId, studentdId);
+                var result = await _unitOfWork.GetCourseStudentRepository().GetCoursesStudentsAsync();
 
-                if (courseStudent == null) return NotFound();
-                return Ok(courseStudent);
+                IEnumerable<CourseStudent> cS = result.Where(c => c.Student.Mail == "peterpalosaari@live.se");
+                // IEnumerable<CourseStudent> cS = result.Where(c => c.StudentId == 59);
+
+                if (cS == null) return NotFound();
+                return Ok(cS);
             }
             catch (Exception ex)
             {

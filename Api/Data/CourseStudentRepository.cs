@@ -29,11 +29,6 @@ namespace Api.Data
             return await _context.CoursesStudents.ToListAsync();
         }
 
-        public async Task<CourseStudent> GetCourseStudentByIdAsync(int courseId, int studentId)
-        {
-            return await _context.CoursesStudents.FirstOrDefaultAsync(cs => cs.CourseId == courseId && cs.StudentId == studentId);
-        }
-
         public async Task<bool> SaveAllChangesAsync()
         {
             return await _context.SaveChangesAsync() > 0;

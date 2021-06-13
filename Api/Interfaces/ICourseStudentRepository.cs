@@ -8,7 +8,6 @@ namespace Api.Interfaces
     {
         Task AddAsync(CourseStudent courseStudent);
         Task<IEnumerable<CourseStudent>> GetCoursesStudentsAsync();
-        Task<CourseStudent> GetCourseStudentByIdAsync(int courseId, int studentId);
         void Update(CourseStudent courseStudent);
         void Delete(CourseStudent courseStudent);
         Task<bool> SaveAllChangesAsync();
