@@ -5,17 +5,17 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Api.Data.Migrations
+namespace Api.data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210610194418_InitialCreate")]
+    [Migration("20210613173937_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.6");
+                .HasAnnotation("ProductVersion", "5.0.7");
 
             modelBuilder.Entity("Api.Entities.Course", b =>
                 {

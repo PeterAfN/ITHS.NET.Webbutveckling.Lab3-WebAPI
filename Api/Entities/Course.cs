@@ -13,6 +13,8 @@ namespace Api.Entities
         public string Difficulty { get; set; }
         public string Status { get; set; }
         public decimal Price { get; set; }
-        public List<CourseStudent> CourseStudent { get; set; }
+
+        public virtual ICollection<CourseStudent> CourseStudent { get; set; }
+        // public virtual ICollection<Student> Students { get; set; }
     }
 }

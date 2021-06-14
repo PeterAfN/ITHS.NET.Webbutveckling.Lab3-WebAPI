@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Api.Entities;
 using Api.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Api.Data
 {
@@ -28,6 +29,11 @@ namespace Api.Data
         {
             return await _context.CoursesStudents.ToListAsync();
         }
+
+        // public async Task<IEnumerable<CourseStudent>> GetAllCoursesStudentsByEmail(string email)
+        // {
+        //     return await _context.CoursesStudents.ToListAsync().ContinueWith(cs => cs.Result.Where(c => c.Student.Mail == email));
+        // }
 
         public async Task<bool> SaveAllChangesAsync()
         {

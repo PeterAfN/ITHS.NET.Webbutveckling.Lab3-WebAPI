@@ -46,15 +46,16 @@ namespace Api.Controllers
             }
         }
 
-        [HttpGet("{studentEmail}")]
-        public async Task<IActionResult> GetAllCoursesStudents(string studentEmail)
+        [HttpGet("{studentId}")]
+        public async Task<IActionResult> GetAllCoursesStudentsByEmail(int studentId)
         {
             try
             {
                 var result = await _unitOfWork.GetCourseStudentRepository().GetCoursesStudentsAsync();
 
-                IEnumerable<CourseStudent> cS = result.Where(c => c.Student.Mail == "peterpalosaari@live.se");
-                // IEnumerable<CourseStudent> cS = result.Where(c => c.StudentId == 59);
+                // var filteredStudentsCourses =  result.Where(c => c?.Student.Mail == "peterpalosaari@live.se");
+
+                IEnumerable<CourseStudent> cS = result.Where(c => c.StudentId == studentId);
 
                 if (cS == null) return NotFound();
                 return Ok(cS);

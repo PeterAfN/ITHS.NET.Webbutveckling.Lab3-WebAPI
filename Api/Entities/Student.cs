@@ -15,6 +15,7 @@ namespace Api.Entities
         public int PostalCode { get; set; }
         public string Country { get; set; }
 
-        public List<CourseStudent> CourseStudent { get; set; }
+        public virtual ICollection<CourseStudent> CourseStudent { get; set; }
+        // public virtual ICollection<Course> Courses { get; set; }
     }
 }
