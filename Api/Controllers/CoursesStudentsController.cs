@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.ComponentModel;
 using System;
 using System.Threading.Tasks;
@@ -34,6 +35,7 @@ namespace Api.Controllers
         {
             try
             {
+                Debug.Write("--------------------ööööööööööööööööööööö");
                 await _unitOfWork.GetCourseStudentRepository().AddAsync(courseStudent);
 
                 if (await _unitOfWork.GetCourseStudentRepository().SaveAllChangesAsync()) return StatusCode(201);

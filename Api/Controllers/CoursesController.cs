@@ -66,6 +66,7 @@ namespace Api.Controllers
             course.Description = courseModel.Description;
             course.Length = courseModel.Length;
             course.Difficulty = courseModel.Difficulty;
+            course.Price = courseModel.Price;
             course.Status = courseModel.Status;
 
             _unitOfWork.GetCourseRepository().Update((Course)course);
