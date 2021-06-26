@@ -15,6 +15,5 @@ namespace Api.Entities
         public decimal Price { get; set; }
 
         public virtual ICollection<CourseStudent> CourseStudent { get; set; }
-        // public virtual ICollection<Student> Students { get; set; }
     }
 }

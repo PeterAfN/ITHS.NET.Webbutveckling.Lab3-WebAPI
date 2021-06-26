@@ -16,6 +16,5 @@ namespace Api.Entities
         public string Country { get; set; }
 
         public virtual ICollection<CourseStudent> CourseStudent { get; set; }
-        // public virtual ICollection<Course> Courses { get; set; }
     }
 }

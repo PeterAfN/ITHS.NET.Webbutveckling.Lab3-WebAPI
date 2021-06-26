@@ -35,7 +35,6 @@ namespace Api.Controllers
         {
             try
             {
-                Debug.Write("--------------------ööööööööööööööööööööö");
                 await _unitOfWork.GetCourseStudentRepository().AddAsync(courseStudent);
 
                 if (await _unitOfWork.GetCourseStudentRepository().SaveAllChangesAsync()) return StatusCode(201);
@@ -54,8 +53,6 @@ namespace Api.Controllers
             try
             {
                 var result = await _unitOfWork.GetCourseStudentRepository().GetCoursesStudentsAsync();
-
-                // var filteredStudentsCourses =  result.Where(c => c?.Student.Mail == "peterpalosaari@live.se");
 
                 IEnumerable<CourseStudent> cS = result.Where(c => c.StudentId == studentId);
 
